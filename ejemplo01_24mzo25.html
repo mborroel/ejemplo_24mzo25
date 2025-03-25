@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tablas de Multiplicar Divertidas</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Comic Sans MS', sans-serif;
+            background-color: #f0f8ff;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            background-color: #fff;
+            border-radius: 15px;
+            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            width: 100%;
+            max-width: 400px;
+            text-align: center;
+        }
+
+        h1 {
+            color: #1e90ff;
+            margin-bottom: 10px;
+        }
+
+        .question {
+            font-size: 1.5rem;
+            margin: 15px 0;
+            color: #ff6347;
+        }
+
+        input[type="number"] {
+            width: 50%;
+            padding: 10px;
+            margin-bottom: 20px;
+            border: 2px solid #1e90ff;
+            border-radius: 10px;
+            text-align: center;
+        }
+
+        button {
+            background-color: #1e90ff;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 10px;
+            font-size: 1rem;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #4682b4;
+        }
+
+        .feedback {
+            font-size: 1.2rem;
+            margin-top: 15px;
+            font-weight: bold;
+        }
+
+        .correct {
+            color: green;
+        }
+
+        .wrong {
+            color: red;
+        }
+
+        img {
+            width: 100px;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Practica las Tablas de Multiplicar 🐸</h1>
+        <div class="question" id="question">¿Cuánto es 2 x 3?</div>
+        <input type="number" id="answer" placeholder="Escribe tu respuesta">
+        <button onclick="checkAnswer()">Verificar Respuesta</button>
+        <div class="feedback" id="feedback"></div>
+        <img id="character" src="https://cdn.pixabay.com/photo/2016/04/01/10/29/frog-1291331_1280.png" alt="Personaje divertido">
+    </div>
+
+    <script>
+        const questions = [
+            { num1: 2, num2: 3 },
+            { num1: 4, num2: 5 },
+            { num1: 6, num2: 7 },
+            { num1: 8, num2: 9 },
+            { num1: 10, num2: 2 },
+            { num1: 3, num2: 6 },
+            { num1: 5, num2: 5 }
+        ];
+
+        const characters = [
+            "https://cdn.pixabay.com/photo/2016/04/01/10/29/frog-1291331_1280.png",
+            "https://cdn.pixabay.com/photo/2014/04/03/10/32/bee-310089_1280.png",
+            "https://cdn.pixabay.com/photo/2014/04/03/10/32/cow-310090_1280.png"
+        ];
+
+        let currentQuestionIndex = 0;
+
+        function loadQuestion() {
+            const questionElement = document.getElementById("question");
+            const { num1, num2 } = questions[currentQuestionIndex];
+            questionElement.textContent = `¿Cuánto es ${num1} x ${num2}?`;
+
+            const randomCharacter = characters[Math.floor(Math.random() * characters.length)];
+            document.getElementById("character").src = randomCharacter;
+        }
+
+        function checkAnswer() {
+            const answerInput = document.getElementById("answer");
+            const feedbackElement = document.getElementById("feedback");
+            const { num1, num2 } = questions[currentQuestionIndex];
+            const correctAnswer = num1 * num2;
+
+            if (parseInt(answerInput.value) === correctAnswer) {
+                feedbackElement.textContent = "¡Correcto! 🎉";
+                feedbackElement.className = "feedback correct";
+            } else {
+                feedbackElement.textContent = `¡Ups! La respuesta correcta era ${correctAnswer}. 😢`;
+                feedbackElement.className = "feedback wrong";
+            }
+
+            answerInput.value = "";
+
+            currentQuestionIndex = (currentQuestionIndex + 1) % questions.length;
+            setTimeout(loadQuestion, 2000);
+        }
+
+        loadQuestion();
+    </script>
+</body>
+</html>
